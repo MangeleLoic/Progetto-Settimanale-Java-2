@@ -63,7 +63,7 @@ public class Application {
                     collezione.visualizzaStatistiche();
                     break;
                 case 8:
-                    continua= false;
+                    continua = false;
                     System.out.println("Uscita dal programma...");
                     break;
                 default:
@@ -116,7 +116,6 @@ public class Application {
         }
     }
 
-
     private static void cercaGiocoPerId(Collezione collezione, Scanner scanner) {
         try {
             System.out.println("Inserisci l'ID del gioco da cercare:");
@@ -156,6 +155,9 @@ public class Application {
             System.out.println("Inserisci il numero di giocatori:");
             int numeroGiocatori = scanner.nextInt();
             scanner.nextLine();
+            if (numeroGiocatori <= 0) {
+                throw new IllegalArgumentException("Il numero di giocatori deve essere maggiore di zero.");
+            }
             collezione.ricercaPerNumeroGiocatori(numeroGiocatori).forEach(System.out::println);
         } catch (Exception e) {
             System.out.println("Errore durante la ricerca per numero di giocatori: " + e.getMessage());
@@ -164,14 +166,21 @@ public class Application {
 
     private static void rimuoviGioco(Collezione collezione, Scanner scanner) {
         try {
+            System.out.println("Ecco i giochi che puoi rimuovere:");
+            collezione.getGiochi().forEach(gioco ->
+                    System.out.println("ID: " + gioco.getId() + ", Titolo: " + gioco.getTitolo())
+            );
+
             System.out.println("Inserisci l'ID del gioco da rimuovere:");
             Long idDaRimuovere = scanner.nextLong();
             scanner.nextLine();
+
             if (collezione.rimuoviGioco(idDaRimuovere)) {
                 System.out.println("Gioco rimosso con successo.");
             } else {
                 System.out.println("Gioco non trovato.");
             }
+
         } catch (Exception e) {
             System.out.println("Errore durante la rimozione del gioco: " + e.getMessage());
         }
@@ -179,6 +188,10 @@ public class Application {
 
     private static void aggiornaGioco(Collezione collezione, Scanner scanner) {
         try {
+            System.out.println("Ecco i giochi che puoi aggiornare:");
+            collezione.getGiochi().forEach(gioco ->
+                    System.out.println("ID: " + gioco.getId() + ", Titolo: " + gioco.getTitolo())
+            );
             System.out.println("Inserisci l'ID del gioco da aggiornare:");
             Long id = scanner.nextLong();
             scanner.nextLine();
@@ -233,5 +246,4 @@ public class Application {
             System.out.println("Errore durante l'aggiornamento del gioco: " + e.getMessage());
         }
     }
-
 }

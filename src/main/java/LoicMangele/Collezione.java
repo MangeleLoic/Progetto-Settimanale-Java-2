@@ -9,6 +9,14 @@ import java.util.stream.Collectors;
 public class Collezione {
     private List<Gioco> giochi;
 
+    public List<Gioco> getGiochi() {
+        return giochi;
+    }
+
+    public void setGiochi(List<Gioco> giochi) {
+        this.giochi = giochi;
+    }
+
     public Collezione() {
         giochi = new ArrayList<>();
     }
@@ -42,12 +50,20 @@ public class Collezione {
     }
 
     public List<GiocoDaTavolo> ricercaPerNumeroGiocatori(int numeroGiocatori) {
-        return giochi.stream()
-                .filter(g -> g instanceof Gioco)
+        List<GiocoDaTavolo> giochiTrovati = giochi.stream()
+                .filter(g -> g instanceof GiocoDaTavolo)
                 .map(g -> (GiocoDaTavolo) g)
                 .filter(g -> g.getNumeroGiocatori() == numeroGiocatori)
                 .collect(Collectors.toList());
+
+        if (giochiTrovati.isEmpty()) {
+            System.out.println("Nessun gioco trovato con " + numeroGiocatori + " giocatori.");
+        }
+
+        return giochiTrovati;
     }
+
+
 
     public boolean aggiornaGioco(Gioco giocoAggiornato) {
         Optional<Gioco> giocoTrovato = ricercaPerId(giocoAggiornato.getId());
@@ -72,4 +88,6 @@ public class Collezione {
         System.out.println("Numero di videogiochi: " + videoGiochi);
         System.out.println("Prezzo medio: " + prezzoMedio + "€");
     }
+
+
 }
