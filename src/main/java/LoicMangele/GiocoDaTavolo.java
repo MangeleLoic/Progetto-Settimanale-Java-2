@@ -17,6 +17,9 @@ public class GiocoDaTavolo extends Gioco {
     }
 
     public void setNumeroGiocatori(int numeroGiocatori) {
+        if (numeroGiocatori < 2 || numeroGiocatori > 10) {
+            throw new IllegalArgumentException("Il numero di giocatori deve essere compreso tra 2 e 10.");
+        }
         this.numeroGiocatori = numeroGiocatori;
     }
 

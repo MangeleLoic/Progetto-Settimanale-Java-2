@@ -1,6 +1,7 @@
 package LoicMangele;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -90,8 +91,15 @@ public class Application {
             String isGiocoDaTavolo = scanner.nextLine();
 
             if (isGiocoDaTavolo.equalsIgnoreCase("s")) {
-                System.out.println("Inserisci Numero di Giocatori:");
-                int numGiocatori = scanner.nextInt();
+                int numGiocatori;
+                do {
+                    System.out.println("Inserisci Numero di Giocatori (2-10):");
+                    numGiocatori = scanner.nextInt();
+                    scanner.nextLine();
+                    if (numGiocatori < 2 || numGiocatori > 10) {
+                        System.out.println("Errore: il numero di giocatori deve essere compreso tra 2 e 10. Riprova.");
+                    }
+                } while (numGiocatori < 2 || numGiocatori > 10);
                 System.out.println("Inserisci Durata Partita (in minuti):");
                 int durataPartita = scanner.nextInt();
                 scanner.nextLine();
@@ -193,6 +201,11 @@ public class Application {
                     System.out.println("ID: " + gioco.getId() + ", Titolo: " + gioco.getTitolo())
             );
             System.out.println("Inserisci l'ID del gioco da aggiornare:");
+            if (!scanner.hasNextLong()) {
+                System.out.println("Errore: l'ID deve essere un numero valido.");
+                scanner.nextLine();
+                return;
+            }
             Long id = scanner.nextLong();
             scanner.nextLine();
 
@@ -204,8 +217,15 @@ public class Application {
 
             System.out.println("Inserisci il nuovo titolo:");
             String titolo = scanner.nextLine();
-            System.out.println("Inserisci il nuovo anno di pubblicazione (YYYY-MM-DD):");
-            LocalDate anno = LocalDate.parse(scanner.nextLine());
+            LocalDate anno = null;
+            while (anno == null) {
+                try {
+                    System.out.println("Inserisci il nuovo anno di pubblicazione (YYYY-MM-DD):");
+                    anno = LocalDate.parse(scanner.nextLine());
+                } catch (DateTimeParseException e) {
+                    System.out.println("Errore: inserisci una data valida nel formato YYYY-MM-DD.");
+                }
+            }
             System.out.println("Inserisci il nuovo prezzo:");
             int prezzo = scanner.nextInt();
             scanner.nextLine();
