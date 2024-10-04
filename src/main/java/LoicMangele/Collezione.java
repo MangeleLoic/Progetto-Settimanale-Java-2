@@ -13,18 +13,18 @@ public class Collezione {
         giochi = new ArrayList<>();
     }
 
-
-    public void aggiungiGioco(Gioco gioco) {
+    public void aggiungiGioco(Gioco gioco) throws GiocoGiàEsistenteException {
+        if (ricercaPerId(gioco.getId()).isPresent()) {
+            throw new GiocoGiàEsistenteException("Un gioco con ID " + gioco.getId() + " è già presente.");
+        }
         giochi.add(gioco);
     }
-
 
     public Optional<Gioco> ricercaPerId(Long id) {
         return giochi.stream()
                 .filter(g -> g.getId().equals(id))
                 .findFirst();
     }
-
 
     public boolean rimuoviGioco(Long id) {
         Optional<Gioco> giocoDaRimuovere = ricercaPerId(id);
@@ -35,22 +35,31 @@ public class Collezione {
         return false;
     }
 
-
     public List<Gioco> ricercaPerPrezzo(int prezzo) {
         return giochi.stream()
                 .filter(g -> g.getPrezzo() <= prezzo)
                 .collect(Collectors.toList());
     }
 
-
     public List<GiocoDaTavolo> ricercaPerNumeroGiocatori(int numeroGiocatori) {
         return giochi.stream()
-                .filter(g -> g instanceof GiocoDaTavolo)
+                .filter(g -> g instanceof Gioco)
                 .map(g -> (GiocoDaTavolo) g)
                 .filter(g -> g.getNumeroGiocatori() == numeroGiocatori)
                 .collect(Collectors.toList());
     }
 
+    public boolean aggiornaGioco(Gioco giocoAggiornato) {
+        Optional<Gioco> giocoTrovato = ricercaPerId(giocoAggiornato.getId());
+        if (giocoTrovato.isPresent()) {
+            Gioco giocoEsistente = giocoTrovato.get();
+            giocoEsistente.setTitolo(giocoAggiornato.getTitolo());
+            giocoEsistente.setPrezzo(giocoAggiornato.getPrezzo());
+            giocoEsistente.setAnnoPubblicazione(giocoAggiornato.getAnnoPubblicazione());
+            return true;
+        }
+        return false;
+    }
 
     public void visualizzaStatistiche() {
         long numeroGiochi = giochi.size();

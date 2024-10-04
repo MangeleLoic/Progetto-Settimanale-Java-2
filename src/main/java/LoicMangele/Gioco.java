@@ -56,10 +56,10 @@ public abstract class Gioco {
     @Override
     public String toString() {
         return "Gioco{" +
-                "id=" + id +
-                ", titolo='" + titolo + '\'' +
-                ", annoPubblicazione=" + annoPubblicazione +
-                ", prezzo=" + prezzo +
+                "id: " + id +
+                ", titolo: '" + titolo + '\'' +
+                ", annoPubblicazione: " + annoPubblicazione +
+                ", prezzo: " + prezzo +
                 '}';
     }
 }

@@ -10,7 +10,6 @@ public class GiocoDaTavolo extends Gioco {
         super(id, titolo, annoPubblicazione, prezzo);
         this.numeroGiocatori = numeroGiocatori;
         this.durataPartita = durataPartita;
-
     }
 
     public int getNumeroGiocatori() {
@@ -25,12 +24,19 @@ public class GiocoDaTavolo extends Gioco {
         return durataPartita;
     }
 
-
     public void setDurataPartita(int durataPartita) {
         this.durataPartita = durataPartita;
     }
-    public  String toString() {
-        return super.toString() + " , Numero di Giocatori: " + numeroGiocatori
-                + " ,durata media della partita: " + durataPartita;
+
+    @Override
+    public String toString() {
+        return "GiocoDaTavolo{" +
+                "id: " + getId() +
+                ", titolo: '" + getTitolo() + '\'' +
+                ", annoPubblicazione: " + getAnnoPubblicazione() +
+                ", prezzo: " + getPrezzo() +
+                ", numeroGiocatori: " + numeroGiocatori +
+                ", durataPartita: " + durataPartita + " min" +
+                '}';
     }
 }
