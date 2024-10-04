@@ -9,6 +9,9 @@ public abstract class Gioco {
     private int prezzo;
 
     public Gioco(Long id, String titolo, LocalDate annoPubblicazione, int prezzo) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID non può essere nullo.");
+        }
         this.id = id;
         this.titolo = titolo;
         this.annoPubblicazione = annoPubblicazione;
@@ -44,6 +47,9 @@ public abstract class Gioco {
     }
 
     public void setPrezzo(int prezzo) {
+        if (prezzo < 0) {
+            throw new IllegalArgumentException("Il prezzo non può essere negativo.");
+        }
         this.prezzo = prezzo;
     }
 
