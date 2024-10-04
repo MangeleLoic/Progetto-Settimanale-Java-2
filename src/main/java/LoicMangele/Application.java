@@ -82,8 +82,15 @@ public class Application {
             scanner.nextLine();
             System.out.println("Inserisci Titolo:");
             String titolo = scanner.nextLine();
-            System.out.println("Inserisci Anno di Pubblicazione (YYYY-MM-DD):");
-            LocalDate anno = LocalDate.parse(scanner.nextLine());
+            LocalDate anno = null;
+            while (anno == null) {
+                try {
+                    System.out.println("Inserisci l'anno di pubblicazione (YYYY-MM-DD):");
+                    anno = LocalDate.parse(scanner.nextLine());
+                } catch (DateTimeParseException e) {
+                    System.out.println("Errore: inserisci una data valida nel formato YYYY-MM-DD.");
+                }
+            }
             System.out.println("Inserisci Prezzo:");
             int prezzo = scanner.nextInt();
             scanner.nextLine();
